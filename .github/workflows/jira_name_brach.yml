@@ -1,5 +1,11 @@
 name: Jira CI
-on: [push]
+on: 
+  push:
+    branches:
+      - main
+      - production
+      - master
+      - feature/github-actions-config2
 jobs:
   transition-issue:
       name: Branch Issue
