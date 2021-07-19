@@ -23,7 +23,7 @@ jobs:
     steps:
       - name: Logging
         run: |
-          echo "${{toJSON(github)}}"      
+          echo "${{toJSON(github.event.ref)}}"      
 
       # - when: on_success
       # - name: Login
