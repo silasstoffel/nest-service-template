@@ -1,30 +1,25 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app/app.module';
 import { MicroserviceOptions } from '@nestjs/microservices';
-import { Logger, VersioningType } from '@nestjs/common';
-import { grpcClientOptions, grpcPort } from './grpc-client.options';
+import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
+
+import { AppModule } from './app/app.module';
+import { grpcClientOptions } from './grpc-client.options';
+import { HTTP_PORT, GRPC_PORT } from './enviroment';
+import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 
 const logger = new Logger('Main');
 
 const bootstrap = async () => {
-  const restPort = 3001;
-  process.env.REST_PORT = restPort.toString();
-  process.env.GRPC_PORT = grpcPort.toString();
   const app = await NestFactory.create(AppModule);
-  app.enableVersioning({
-    type: VersioningType.URI,
-  });
+  app.enableVersioning({ type: VersioningType.URI });
   app.connectMicroservice<MicroserviceOptions>(grpcClientOptions);
-  await app.startAllMicroservicesAsync();
-  await app.listen(restPort);
-  logger.log(
-    '🍻️ Core APIs Nest Service Template REST layer listening on port ' +
-      restPort,
-  );
-  logger.log(
-    '🍻️ Core APIs Nest Service Template gRPC layer listening on port ' +
-      grpcPort,
-  );
+  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalFilters(new HttpExceptionFilter());
+  //await app.startAllMicroservicesAsync();
+  await app.listen(HTTP_PORT);
+
+  logger.log(`HTTP listening on port ${HTTP_PORT}`);
+  logger.log(`GRPC listening on port ${GRPC_PORT}`);
 };
 
 bootstrap();

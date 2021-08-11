@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { ProductsModule } from 'src/v1/products/products.module';
+import { ProductsModule } from '../products/products.module';
 
-import { HealthModule } from '../health/health.module';
-import { AppController } from './controllers/app.controller';
+import { AliveController } from './alive.controller';
+import { AppController } from './app.controller';
 
-@Module({
-  imports: [ConfigModule.forRoot(), HealthModule, ProductsModule],
-  controllers: [AppController],
-})
+const imports = [ConfigModule.forRoot(), ProductsModule];
+
+const controllers = [AppController, AliveController];
+
+@Module({ imports, controllers })
 export class AppModule {}

@@ -1,7 +1,8 @@
 version: "3.7"
 
 services:
-  health:
+  node:
+    container_name: 'pricing-events-node'
     build:
       context: .
       dockerfile: Docker/Dockerfile
