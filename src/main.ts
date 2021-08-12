@@ -6,6 +6,7 @@ import { AppModule } from './app/app.module';
 import { grpcClientOptions } from './grpc-client.options';
 import { HTTP_PORT, GRPC_PORT } from './enviroment';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
+import { appSwaggerBootstrap } from './common/config/swagger.config';
 
 const logger = new Logger('Main');
 
@@ -16,10 +17,13 @@ const bootstrap = async () => {
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new HttpExceptionFilter());
   //await app.startAllMicroservicesAsync();
+
+  appSwaggerBootstrap(app);
+
   await app.listen(HTTP_PORT);
 
   logger.log(`HTTP listening on port ${HTTP_PORT}`);
-  logger.log(`GRPC listening on port ${GRPC_PORT}`);
+  // logger.log(`GRPC listening on port ${GRPC_PORT}`);
 };
 
 bootstrap();

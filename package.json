@@ -1,5 +1,5 @@
 {
-  "name": "nest-service-template",
+  "name": "pricing-events-service-api",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -42,7 +42,7 @@
     "@nestjs/core": "^8.0.4",
     "@nestjs/microservices": "^8.0.4",
     "@nestjs/platform-express": "^8.0.4",
-    "@nestjs/swagger": "^5.0.8",
+    "@nestjs/swagger": "^5.0.9",
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
     "reflect-metadata": "^0.1.13",
