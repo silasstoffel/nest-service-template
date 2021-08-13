@@ -1,11 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger';
 
+import { ApiPaginatedResponseSwaggerSchema } from '../../common/swagger/api.paginated.response.swagger.schema.';
 import { ApiResponseSwaggerSchema } from '../../common/swagger/api.response.swagger.schema';
 import { Product } from '../entities/product.entity';
 
+class PaginatedResponse extends ApiPaginatedResponseSwaggerSchema {
+  @ApiProperty({ description: 'Itens', isArray: true, required: false })
+  items: Product;
+}
+
 export class ProductIndexApiResponse extends ApiResponseSwaggerSchema {
-  @ApiProperty({ description: 'Results', isArray: true, required: false })
-  data: Product;
+  @ApiProperty({ description: 'Items', required: false })
+  data: PaginatedResponse;
 }
 
 export class ProductGetApiResponse extends ApiResponseSwaggerSchema {

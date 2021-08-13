@@ -18,7 +18,10 @@ import {
 import { CreateProductDto } from './dtos/create.product';
 import { ProductService } from './product.service';
 import { BaseController } from '../common/http/base.controller';
-import { ApiResponse } from '../common/http/api.response';
+import {
+  ApiResponse,
+  IApiResponsePaginatorControl,
+} from '../common/http/api.response';
 import { UpdateProductDto } from './dtos/update.products';
 import {
   ProductIndexApiResponse,
@@ -46,7 +49,13 @@ export class ProductsController extends BaseController {
   })
   async index(): Promise<ApiResponse> {
     const products = await this.productService.findAll();
-    return this.response(products);
+    const paginator: IApiResponsePaginatorControl = {
+      count: 0,
+      limit: 25,
+      offset: 0,
+      total: products.length,
+    };
+    return this.responseWithPaginator(products, paginator);
   }
 
   @Get(':id')
