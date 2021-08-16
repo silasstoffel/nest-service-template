@@ -7,6 +7,6 @@ export class ApiErrorResponseSwaggerSchema {
   @ApiProperty({ description: 'Message' })
   message: string | null;
 
-  @ApiProperty({ description: 'Data', required: false })
+  @ApiProperty({ description: 'Data', required: false, default: null })
   data: any;
 }

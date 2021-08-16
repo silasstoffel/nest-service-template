@@ -50,12 +50,12 @@ export class ProductsController extends BaseController {
   async index(): Promise<ApiResponse> {
     const products = await this.productService.findAll();
     const paginator: IApiResponsePaginatorControl = {
-      count: 0,
-      limit: 25,
+      count: 5,
+      limit: 10,
       offset: 0,
       total: products.length,
     };
-    return this.responseWithPaginator(products, paginator);
+    return this.responseWithPaginationControl(paginator, products);
   }
 
   @Get(':id')
